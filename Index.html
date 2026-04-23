@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistem Kasir Sederhana</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f0f2f5; }
+        .box { background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        #struk { margin-top: 20px; padding: 15px; border-top: 2px dashed #000; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2 style="text-align: center;">Kasir</h2>
+    <input type="text" id="barang" placeholder="Nama Barang">
+    <input type="number" id="harga" placeholder="Harga Satuan">
+    <input type="number" id="jumlah" placeholder="Jumlah">
+    <button onclick="hitung()">PROSES PEMBAYARAN</button>
+
+    <div id="struk">
+        </div>
+</div>
+
+<script>
+    function hitung() {
+        const nama = document.getElementById('barang').value;
+        const harga = parseFloat(document.getElementById('harga').value);
+        const qty = parseInt(document.getElementById('jumlah').value);
+        const areaStruk = document.getElementById('struk');
+
+        if (!nama || isNaN(harga) || isNaN(qty)) {
+            alert("Lengkapi data barang dulu, Breh!");
+            return;
+        }
+
+
+        const subtotal = harga * qty;
+        const pajak = subtotal * 0.10; // PPN 10%
+        const total = subtotal + pajak;
+
+        areaStruk.style.display = 'block';
+        areaStruk.innerHTML = `
+            <strong>*** STRUK BELANJA ***</strong><br>
+            Barang : ${nama}<br>
+            Harga  : Rp ${harga.toLocaleString()}<br>
+            Qty    : ${qty}<br>
+            <hr>
+            Subtotal : Rp ${subtotal.toLocaleString()}<br>
+            Pajak (10%) : Rp ${pajak.toLocaleString()}<br>
+            <strong>Total Bayar : Rp ${total.toLocaleString()}</strong>
+        `;
+    }
+</script>
+
+</body>
+</html>
